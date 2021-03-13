@@ -5,6 +5,10 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     User firebaseUser = Provider.of<User>(context);
 
-    return Container();
+    if (firebaseUser == null) {
+      return SignInPage();
+    } else {
+      return MainPage();
+    }
   }
 }
