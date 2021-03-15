@@ -1,4 +1,6 @@
 import 'package:bwa_flutix/bloc/page_bloc.dart';
+import 'package:bwa_flutix/bloc/theme_bloc.dart';
+import 'package:bwa_flutix/bloc/user_bloc.dart';
 import 'package:bwa_flutix/services/services.dart';
 import 'package:bwa_flutix/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +21,15 @@ class MyApp extends StatelessWidget {
       value: AuthServices.userStream,
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (_) => PageBloc())
+          BlocProvider(create: (_) => PageBloc()),
+          BlocProvider(create: (_) => UserBloc()),
+          BlocProvider(create: (_) => ThemeBloc()),
         ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: Wrapper(),
+        child: BlocBuilder<ThemeBloc, ThemeState>(
+          builder: (_, themeState) => MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: Wrapper(),
+          ),
         ),
       ),
     );
