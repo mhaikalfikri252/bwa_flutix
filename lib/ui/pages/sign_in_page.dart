@@ -15,6 +15,12 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<ThemeBloc>(context).add(
+      ChangeTheme(
+        ThemeData().copyWith(primaryColor: accentColor2),
+      ),
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -47,6 +53,9 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ),
                 TextField(
+                  onChanged: (text) {
+                    isEmailValid = EmailValidator.validate(text);
+                  },
                   controller: emailController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -60,6 +69,11 @@ class _SignInPageState extends State<SignInPage> {
                   height: 16,
                 ),
                 TextField(
+                  onChanged: (text) {
+                    setState(() {
+                      isPasswordValid = text.length >= 6;
+                    });
+                  },
                   controller: passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
@@ -101,9 +115,37 @@ class _SignInPageState extends State<SignInPage> {
                     child: FloatingActionButton(
                       child: Icon(
                         Icons.arrow_forward,
+                        color: isEmailValid && isPasswordValid
+                            ? Colors.white
+                            : Color(0xFFBEBEBE),
                       ),
-                      backgroundColor: mainColor,
-                      onPressed: () {},
+                      backgroundColor: isEmailValid && isPasswordValid
+                          ? mainColor
+                          : Color(0xFFE4E4E4),
+                      onPressed: isEmailValid && isPasswordValid
+                          ? () async {
+                              setState(() {
+                                isSigningIn = true;
+                              });
+
+                              SignInSignUpResult result =
+                                  await AuthServices.signIn(
+                                      emailController.text,
+                                      passwordController.text);
+
+                              if (result.user == null) {
+                                setState(() {
+                                  isSigningIn = false;
+                                });
+
+                                Flushbar(
+                                  duration: Duration(seconds: 4),
+                                  flushbarPosition: FlushbarPosition.TOP,
+                                  backgroundColor: Color(0xFFFF5C83),
+                                )..show(context);
+                              }
+                            }
+                          : null,
                     ),
                   ),
                 ),

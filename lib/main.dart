@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         ],
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: (_, themeState) => MaterialApp(
+            theme: themeState.themeData,
             debugShowCheckedModeBanner: false,
             home: Wrapper(),
           ),
