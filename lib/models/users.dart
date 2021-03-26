@@ -1,6 +1,6 @@
 part of 'models.dart';
 
-class UserModel extends Equatable{
+class UserModel extends Equatable {
   final String id;
   final String email;
   final String name;
@@ -9,12 +9,16 @@ class UserModel extends Equatable{
   final String selectedLanguage;
   final int balance;
 
-  UserModel(this.id, this.email,
-      {this.name,
-      this.profilePicture,
-      this.balance,
-      this.selectedGenres,
-      this.selectedLanguage});
+  UserModel(
+    this.id,
+    this.email, {
+    this.name,
+    this.profilePicture,
+    this.balance,
+    this.selectedGenres,
+    this.selectedLanguage,
+  });
+
 
   @override
   String toString() {
@@ -29,6 +33,6 @@ class UserModel extends Equatable{
         profilePicture,
         selectedGenres,
         selectedLanguage,
-        balance
+        balance,
       ];
 }

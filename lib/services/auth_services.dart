@@ -25,8 +25,8 @@ class AuthServices {
       await UserServices.updateUser(user);
 
       return SignInSignUpResult(user: user);
-    } on FirebaseAuthException catch (e) {
-      return SignInSignUpResult(message: e.toString().trim());
+    } on PlatformException catch (e) {
+      return SignInSignUpResult(message: e.toString());
     }
   }
 
@@ -43,8 +43,8 @@ class AuthServices {
       UserModel user = await result.user.fromFireStore();
 
       return SignInSignUpResult(user: user);
-    } on FirebaseAuthException catch (e) {
-      return SignInSignUpResult(message: e.toString().trim());
+    } on PlatformException catch (e) {
+      return SignInSignUpResult(message: e.toString());
     }
   }
 

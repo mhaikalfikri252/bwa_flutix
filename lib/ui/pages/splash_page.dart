@@ -58,7 +58,13 @@ class SplashPage extends StatelessWidget {
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(mainColor),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  context.read<PageBloc>().add(
+                        GoToRegistrationPage(
+                          RegistrationData(),
+                        ),
+                      );
+                },
               ),
             ),
             Row(
